@@ -1,7 +1,6 @@
 <div align=center>
-    <img src="https://cdn.discordapp.com/attachments/528334474895949840/544109119741755392/BampyIMG.png"</img>
     <a href="">
-        <img src="https://cdn.discordapp.com/attachments/528334474895949840/544153817269141504/bampy_invite_img.png" </img>
+        <img src="https://cdn.discordapp.com/attachments/528334474895949840/544109119741755392/BampyIMG.png"</img>
     </a>
     <h1>Bampy</h1>
     <strong>Hopefully a nice discord bot</strong>
