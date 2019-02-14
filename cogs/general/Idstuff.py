@@ -16,5 +16,4 @@ class IdStuff:
         await ctx.send(embed=embed)
 
 def setup(bot):
-    BetterHelp.add_cmd(bot, "ID", "A cmd to get all important ID's", "general")
     bot.add_cog(IdStuff(bot))
