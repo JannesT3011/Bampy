@@ -3,7 +3,7 @@
         <img src="https://cdn.discordapp.com/attachments/528334474895949840/544109119741755392/BampyIMG.png"</img>
     </a>
     <h1>Bampy</h1>
-    <strong>Hopefully a nice discord bot</strong>
+    <strong>Hopefully a nice discord bot</strong> </br>
     <strong>Not done yet!</strong>
 </div>
 
