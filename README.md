@@ -4,6 +4,7 @@
     </a>
     <h1>Bampy</h1>
     <strong>Hopefully a nice discord bot</strong>
+    <strong>Not done yet!</strong>
 </div>
 
 ## Cmds
