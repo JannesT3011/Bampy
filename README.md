@@ -4,7 +4,8 @@
     </a>
     <h1>Bampy</h1>
     <strong>Hopefully a nice discord bot</strong>
-    [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e1fdecea1d345a7973fbe57099b1f3c)](https://app.codacy.com/app/Bmbus/Bampy?utm_source=github.com&utm_medium=referral&utm_content=Bmbus/Bampy&utm_campaign=Badge_Grade_Dashboard)
+    
+    [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e1fdecea1d345a7973fbe57099b1f3c)](https://app.codacy.com/app/Bmbus    /Bampy?utm_source=github.com&utm_medium=referral&utm_content=Bmbus/Bampy&utm_campaign=Badge_Grade_Dashboard)
 </div>
 
 ## Cmds
