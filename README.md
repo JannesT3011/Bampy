@@ -6,7 +6,6 @@
     <strong>Hopefully a nice discord bot</strong> </br>
     <strong>Not done yet!</strong> 
 </div>
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6e253b65e6e34ae6bc4894722f4f46e7)](https://www.codacy.com/app/Bmbus/Bampy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bmbus/Bampy&amp;utm_campaign=Badge_Grade)
 ## Cmds
 - Duden (German only ~ Search something in the duden)
 - wiki (Search something on wikipedia)
