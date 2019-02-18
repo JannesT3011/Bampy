@@ -1,6 +1,6 @@
 
 def new_config():
-    print("Oops.. I cant file a config file! Enter your config now:")
+    print("Oops.. I cant find a config file! Enter your config now:")
     data = {
         "token": input("Enter your bot token: "),
         "owner": input("Enter your ID: "),
