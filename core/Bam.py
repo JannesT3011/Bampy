@@ -1,11 +1,28 @@
 from discord.ext import commands
-import asyncio
 import asyncpg
 from utils import config
-from utils.Db import Db
+from utils.DB.Db import Db
 from utils import cogs
+import json
 
 config = config.Config()
+
+async def get_prefix(bot, message):
+    try:
+        query = """SELECT * FROM general WHERE id = $1;"""
+        row = await bot.db.fetchrow(query, message.guild.id)
+    except AttributeError:
+        pass
+
+    if not message.guild:
+        return commands.when_mentioned_or(config.prefix())(bot, message)
+
+    if row is None:
+        query = """INSERT INTO general (id, prefix) VALUES ($1, $2)"""
+        await bot.db.execute(query, message.guild.id, config.prefix())
+        return commands.when_mentioned_or(config.prefix())(bot, message)
+
+    return commands.when_mentioned_or(row["prefix"], config.prefix())(bot, message)
 
 async def run():
 
@@ -28,7 +45,7 @@ async def run():
 class Bot(commands.Bot):
     def __init__(self, **kwargs):
         super().__init__(
-            command_prefix=commands.when_mentioned_or(config.prefix()),
+            command_prefix=get_prefix,
             description=kwargs.pop("description")
         )
         self.db = kwargs.pop("db")
@@ -42,6 +59,3 @@ class Bot(commands.Bot):
 
     async def on_ready(self):
         print("##########\n"f"{self.user.name}\n"f"{self.user.id}\n""##########")
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(run())
