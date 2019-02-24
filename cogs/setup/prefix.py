@@ -25,7 +25,7 @@ class Prefix:
         else:
             query = """UPDATE general SET prefix = $1 WHERE id = $2;"""
             await self.bot.db.execute(query, prefix, ctx.guild.id)
-            embed = discord.Embed(title=f"Yeah! You added a server prefix", description=f"Prefix: `{prefix}`", color=random_color())
+            embed = discord.Embed(title=f"Yeah! You updated the server prefix", description=f"Prefix: `{prefix}`", color=random_color())
             await ctx.send(embed=embed)
 
     @_prefix_add.error
