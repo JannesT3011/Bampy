@@ -3,7 +3,7 @@ import asyncpg
 from utils import config
 from utils.DB.Db import Db
 from utils import cogs
-import json
+import discord
 
 config = config.Config()
 
@@ -29,7 +29,7 @@ async def run():
     login_data = config.dblogin()
     db = await asyncpg.create_pool(**login_data)
     description = config.description()
-    bot = Bot(description=description, db=db)
+    bot = Bampy(description=description, db=db)
 
     for query in Db.create_tables():
         await db.execute(query)
@@ -42,7 +42,7 @@ async def run():
         print(f"Something went wrong: `{e}`")
 
 """skidded from ItsVale (https://gist.github.com/itsVale/b63ffca851ab8e645743c45be15cfb60)"""
-class Bot(commands.Bot):
+class Bampy(commands.Bot):
     def __init__(self, **kwargs):
         super().__init__(
             command_prefix=get_prefix,
@@ -59,3 +59,4 @@ class Bot(commands.Bot):
 
     async def on_ready(self):
         print("##########\n"f"{self.user.name}\n"f"{self.user.id}\n""##########")
+        print(discord.utils.oauth_url(self.user.id))
