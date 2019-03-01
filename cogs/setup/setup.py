@@ -4,7 +4,6 @@ import discord
 from disputils import BotEmbedPaginator
 from utils.config import Config
 from . import checks, SETUP_OPTIONS
-import pprint
 
 class Setup:
     def __init__(self, bot):
@@ -14,6 +13,7 @@ class Setup:
     @commands.has_permissions(manage_guild=True)
     async def _setup(self, ctx):
         """Configure the bot"""
+
         query = """SELECT * FROM setup WHERE server_id = $1;"""
         row = await self.bot.db.fetchrow(query, ctx.guild.id)
         CHECK = checks.Checks(self.bot, ctx.guild.id, row)
@@ -44,6 +44,13 @@ class Setup:
         paginator = BotEmbedPaginator(ctx, embed)
         await paginator.run()
 
+    @_setup.error
+    async def on_error(self,ctx, error):
+        """ERROR HANDLER FOR SETUP FUNCTION"""
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
+            await ctx.send(embed=embed)
+
     @_setup.command(name="enable")
     @commands.has_permissions(manage_guild=True)
     async def _setup_enable(self, ctx, *, arg:str):
@@ -57,9 +64,21 @@ class Setup:
             embed = discord.Embed(title="Oops..", color=random_color(), description="This isn't a setup function...\n\n"f"`{', '.join(SETUP_OPTIONS)}`")
             await ctx.send(embed=embed)
 
+    @_setup_enable.error
+    async def on_error(self, ctx, error):
+        """ERROR HANDLER FOR SETUP ~ ENABLE FUNCTION"""
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
+            await ctx.send(embed=embed)
+        elif isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(title="Oh dude..", description="You need to type in the function, you want to enable\n"f"E.g.:`{Config().prefix()}setup enable edu`", color=random_color())
+            await ctx.send(embed=embed)
+
     @_setup.command(name="disable")
     @commands.has_permissions(manage_guild=True)
     async def _setup_disable(self, ctx, *, arg:str):
+        """DISABLE A SETUP FUNCTION"""
+
         if arg in SETUP_OPTIONS:
             await self._update_db(arg, False, ctx.guild)
             embed = discord.Embed(title="Okayy", color=random_color(), description=f"You disabled {arg}")
@@ -68,8 +87,19 @@ class Setup:
             embed = discord.Embed(title="Oops..", color=random_color(),description="This isn't a setup function...\n\n"f"`{', '.join(SETUP_OPTIONS)}`")
             await ctx.send(embed=embed)
 
+    @_setup_disable.error
+    async def on_error(self, ctx, error):
+        """ERROR HANDLER FOR SETUP ~ DISABLE FUNCTION"""
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
+            await ctx.send(embed=embed)
+        elif isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(title="Oh dude..",description="You need to type in the function, you want to enable\n"f"E.g.:`{Config().prefix()}setup disable edu`",color=random_color())
+            await ctx.send(embed=embed)
+
 
     async def _update_db(self, arg:str, set:bool, guild):
+        """UPDATE THE ´SETUP´ DATABASE"""
         ALIASES = {
             "user_join_leave": """UPDATE setup SET userjoin_leave = $1 WHERE server_id = $2;""",
             "tags": """UPDATE setup SET servertags = $1 WHERE server_id = $2;""",
