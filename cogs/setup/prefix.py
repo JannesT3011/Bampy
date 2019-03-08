@@ -10,6 +10,7 @@ class Prefix:
         self.bot = bot
 
     @commands.group(name="prefix", invoke_without_command=True)
+    @commands.cooldown(1, 10.0, commands.BucketType.user)
     async def _prefix(self, ctx):
         query = """SELECT * FROM general WHERE id = $1;"""
         row = await self.bot.db.fetchrow(query, ctx.guild.id)
@@ -18,6 +19,7 @@ class Prefix:
         await ctx.send(embed=embed)
 
     @_prefix.command(name="add", aliases=["create", "update"])
+    @commands.cooldown(1, 8.0, commands.BucketType.user)
     @commands.has_permissions(manage_guild=True)
     async def _prefix_add(self, ctx, *, prefix:str):
         if len(prefix) > 15:

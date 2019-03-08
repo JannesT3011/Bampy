@@ -10,6 +10,7 @@ class Setup:
         self.bot = bot
 
     @commands.group(name="setup", aliases=["settings", "options"], invoke_without_command=True)
+    @commands.cooldown(2, 5.0, commands.BucketType.user)
     @commands.has_permissions(manage_guild=True)
     async def _setup(self, ctx):
         """Configure the bot"""

@@ -3,5 +3,7 @@ extensions = [
     "cogs.setup.start",
     "cogs.setup.prefix",
     "cogs.setup.setup",
-    "utils.events"
+    "cogs.general.tags",
+    "utils.events",
+    "utils.errors"
 ]
