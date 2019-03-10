@@ -7,9 +7,12 @@ from utils.errors import NameTooLongError, TagNotFoundError, NoServerTags, TagEx
 def is_enabled():
     """CHECK IF COMMAND IS ENABLED"""
     async def pred(ctx):
-        query = """SELECT servertags FROM setup WHERE server_id = $1;"""
-        row = await ctx.bot.db.fetch(query, ctx.guild.id)
-        return row[0]["servertags"] is True
+        try:
+            query = """SELECT servertags FROM setup WHERE server_id = $1;"""
+            row = await ctx.bot.db.fetch(query, ctx.guild.id)
+            return row[0]["servertags"] is True
+        except AttributeError:
+            pass
 
     return commands.check(pred)
 
@@ -38,6 +41,9 @@ class Servertags:
         elif isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(title="Oh.. you missed an argument...", color=random_color(), description=f"Type `{Config().prefix()}tag <TAGNAME>`")
             await ctx.send(embed=embed)
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+            embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
+            await ctx.send(embed=embed)
 
     @_tag.command(name="all", aliases=["list", "show_all"])
     @commands.cooldown(1, 5.0, commands.BucketType.user)
@@ -61,7 +67,7 @@ class Servertags:
         if isinstance(error, NoServerTags):
             embed = discord.Embed(title="Oh, sorry..", description="There are no tags on this server", color=random_color())
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.CheckFailure):
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
             embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
             await ctx.send(embed=embed)
 
@@ -90,7 +96,7 @@ class Servertags:
         elif isinstance(error, NameTooLongError):
             embed = discord.Embed(title="Oops..", color=random_color(), description="The tag name is to long\n""A tag name can only be 50 characters long!")
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.CheckFailure):
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
             embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
             await ctx.send(embed=embed)
         elif isinstance(error, commands.MissingRequiredArgument):
@@ -126,7 +132,7 @@ class Servertags:
         elif isinstance(error, TagNotFoundError):
             embed = discord.Embed(title="Oops..", color=random_color(), description=f"`{error}` isn't a tag on this server")
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.CheckFailure):
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
             embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
             await ctx.send(embed=embed)
 
@@ -149,7 +155,7 @@ class Servertags:
         if isinstance(error, NoServerTags):
             embed = discord.Embed(title="Oops..", color=random_color(), description="It seems like you haven't created a server tags yet\n"f"`{Config().prefix()}tag add <NAME> <TEXT>`")
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.CheckFailure):
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
             embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
             await ctx.send(embed=embed)
 
@@ -177,7 +183,7 @@ class Servertags:
         elif isinstance(error, TagNotFoundError):
             embed = discord.Embed(title="Oops..", color=random_color(), description=f"`{error}` isn't a tag on this server")
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.CheckFailure):
+        elif isinstance(error, commands.CheckFailure) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
             embed = discord.Embed(title="Oh..", color=random_color(), description="You can't use this command, because it's disabled\n"f"Type `{Config().prefix()}setup enable tags`")
             await ctx.send(embed=embed)
 
