@@ -60,3 +60,9 @@ class Bampy(commands.Bot):
     async def on_ready(self):
         print("##########\n"f"{self.user.name}\n"f"{self.user.id}\n""##########")
         print(discord.utils.oauth_url(self.user.id))
+
+    async def on_message(self, message):
+        if not message.guild:
+            return
+
+        await self.process_commands(message)

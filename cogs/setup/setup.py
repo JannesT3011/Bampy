@@ -48,7 +48,7 @@ class Setup:
     @_setup.error
     async def on_error(self,ctx, error):
         """ERROR HANDLER FOR SETUP FUNCTION"""
-        if isinstance(error, commands.MissingPermissions) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+        if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
             await ctx.send(embed=embed)
 
@@ -68,10 +68,10 @@ class Setup:
     @_setup_enable.error
     async def on_error(self, ctx, error):
         """ERROR HANDLER FOR SETUP ~ ENABLE FUNCTION"""
-        if isinstance(error, commands.MissingPermissions) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+        if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.MissingRequiredArgument) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+        elif isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(title="Oh dude..", description="You need to type in the function, you want to enable\n"f"E.g.:`{Config().prefix()}setup enable edu`", color=random_color())
             await ctx.send(embed=embed)
 
@@ -91,10 +91,10 @@ class Setup:
     @_setup_disable.error
     async def on_error(self, ctx, error):
         """ERROR HANDLER FOR SETUP ~ DISABLE FUNCTION"""
-        if isinstance(error, commands.MissingPermissions) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+        if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(title="Oops.. you need more permissions",description="You need the `manage guild` permission to execute this command",color=random_color())
             await ctx.send(embed=embed)
-        elif isinstance(error, commands.MissingRequiredArgument) and isinstance(ctx.channel, discord.abc.PrivateChannel) is False:
+        elif isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(title="Oh dude..",description="You need to type in the function, you want to enable\n"f"E.g.:`{Config().prefix()}setup disable edu`",color=random_color())
             await ctx.send(embed=embed)
 

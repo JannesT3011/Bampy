@@ -34,8 +34,6 @@ class GeneralErrors:
             """COOLDOWN ERROR HANDLING"""
             embed = discord.Embed(title="Chill dude..", color=random_color(), description=str(error))
             await ctx.send(embed=embed)
-        elif isinstance(ctx.channel, discord.abc.PrivateChannel):
-            return await ctx.send(f"Hehe.. you cant trigger a command here! Go on a server (`Only {Config().prefix()}stats and {Config().prefix()}start`)")
 
 def setup(bot):
     bot.add_cog(GeneralErrors(bot))

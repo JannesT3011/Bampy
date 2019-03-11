@@ -1,4 +1,5 @@
 from . import ON, OFF
+from discord.ext import commands
 
 class Checks:
     def __init__(self, bot, guild, row):
